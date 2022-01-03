@@ -86,4 +86,19 @@ public class DbHelper extends SQLiteOpenHelper {
             return false;
     }
 
+    public boolean update(String name, String newname)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues con=new ContentValues();
+        con.put("STUDENTName" , newname);
+        Cursor c=db.rawQuery("select * from StudentTable where STUDENTName=?", new String[] {name});
+        if(c.getCount()>0)
+        {
+            db.update("StudentTable", con,  "STUDENTName=?",new String[] {name} );
+            return true;
+        }
+
+        else
+            return false;
+    }
 }

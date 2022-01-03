@@ -2,8 +2,10 @@ package com.example.sqlitedatabase;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Button b1,b2,b3,b4;
     EditText e1, e2;
     ListView v1;
-
+    List<String> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DbHelper dbHelper = new DbHelper(MainActivity.this);
-                List<String> list = dbHelper.getAllStudents();
+                list = dbHelper.getAllStudents();
                 ArrayAdapter arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1,list);
                 v1.setAdapter(arrayAdapter);
 
@@ -57,6 +59,28 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+            v1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+                Intent obj=new Intent(MainActivity.this, MainActivity2.class);
+                String name=list.get(position);
+
+
+                obj.putExtra("name", name);
+                startActivity(obj);
+
+
+
+            }
+        });
+
+
+
 
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
